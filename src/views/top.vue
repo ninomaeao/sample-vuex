@@ -15,6 +15,9 @@
       <li>
         <router-link to="/transition_group">リストトランジション transition-group</router-link>
       </li>
+      <li>
+        <router-link to="/directives">ディレクティブ directives</router-link>
+      </li>
     </ul>
 
   </div>

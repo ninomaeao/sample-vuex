@@ -8,6 +8,7 @@ import TestTodos from '../views/test/todos.vue'
 import TestTodo from '../views/test/todo.vue'
 import TestTransition from '../views/test/transition.vue'
 import TestTransitionGroup from '../views/test/transition_group.vue'
+import TestDirectives from '../views/test/directives.vue'
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,7 @@ const routes = [
   {path: '/todos/:id', component: TestTodo, props: true},
   {path: '/transition', component: TestTransition},
   {path: '/transition_group', component: TestTransitionGroup},
+  {path: '/directives', component: TestDirectives},
   {path: '/todos/:id', component: TestTodo, props: true},
 ];
 
