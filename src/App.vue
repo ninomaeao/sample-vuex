@@ -3,7 +3,13 @@
     <header>
       <img src="./assets/logo.png" style="width: 60px; ">
       <h1>Sample vue-loader</h1>
-      <div id="time"></div>
+      <transition appear
+                  v-on:before-enter="beforeEnter"
+                  v-on:enter="enter"
+                  v-bind:css="false"
+      >
+        <div id="time"></div>
+      </transition>
     </header>
     <nav>
       <ul>
@@ -44,14 +50,13 @@
         animatedNumber: 0
       }
     },
-    created() {
-      window.setInterval(() => {
-        document.getElementById('time').innerText = moment().format('YYYY-MM-DD HH:mm:ss');
-      }, 1000);
+    mounted() {
+      this.timer();
+      window.setInterval(this.timer, 1000);
     },
     watch: {
       number: function (newValue, oldValue) {
-        var vm = this
+        const vm = this;
 
         function animate() {
           if (TWEEN.update()) {
@@ -65,9 +70,21 @@
           .onUpdate(function () {
             vm.animatedNumber = this.tweeningNumber.toFixed(0)
           })
-          .start()
+          .start();
         animate()
       }
+    },
+    methods: {
+      timer() {
+        document.getElementById('time').innerText = moment().format('YYYY-MM-DD HH:mm:ss');
+      },
+      beforeEnter(el) {
+        el.style.opacity = 0;
+      },
+      enter(el, done) {
+        Velocity(el, {opacity: 1}, {delay: 500, duration: 500, easing: 'ease-in-out'});
+        done();
+      },
     }
   }
 </script>
@@ -85,6 +102,12 @@
     padding: 30px 0;
     text-align: center;
     color: $accentColor;
+  }
+
+  #time {
+    margin-top: 20px;
+    height: 20px;
+    text-align: center;
   }
 
   nav ul {
@@ -106,6 +129,10 @@
     .contents {
       h2 {
         color: $accentColor;
+        margin: 0 0 .5em 0;
+      }
+      h3 {
+        margin: 1em 0;
       }
       width: 100%;
       background: $mainColorDark;

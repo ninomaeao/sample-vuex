@@ -6,6 +6,8 @@ import Top from '../views/top.vue'
 import TestIncrement from '../views/test/increment.vue'
 import TestTodos from '../views/test/todos.vue'
 import TestTodo from '../views/test/todo.vue'
+import TestTransition from '../views/test/transition.vue'
+import TestTransitionGroup from '../views/test/transition_group.vue'
 
 Vue.use(VueRouter);
 
@@ -14,6 +16,9 @@ const routes = [
   {path: '/', component: Top},
   {path: '/increment', component: TestIncrement},
   {path: '/todos', component: TestTodos},
+  {path: '/todos/:id', component: TestTodo, props: true},
+  {path: '/transition', component: TestTransition},
+  {path: '/transition_group', component: TestTransitionGroup},
   {path: '/todos/:id', component: TestTodo, props: true},
 ];
 

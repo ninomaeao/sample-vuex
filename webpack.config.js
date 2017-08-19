@@ -7,7 +7,9 @@ module.exports = {
   entry: {
     main: './src/main.js',
     vendor: [
-      'moment'
+      'moment',
+      'lodash',
+      'velocity-animate'
     ]
   },
   output: {

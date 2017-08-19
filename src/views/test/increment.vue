@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>インクリメント</h2>
     <p>{{ count }}</p>
     <p>
       <button @click="increment">+</button>
