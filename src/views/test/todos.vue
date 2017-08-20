@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>TODOS</h2>
     <div v-for="todo in todos">
       {{ todo.id }} : {{ todo.text }}
       <router-link :to="/todos/ + todo.id">詳細</router-link>
@@ -9,7 +8,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     computed: {
@@ -17,10 +16,9 @@
         todos: 'allTodos'
       }),
     },
-    methods: mapActions([
-    ]),
-    created () {
+    methods: mapActions([]),
+    created() {
       this.$store.dispatch('todo/getAllTodos')
-    }
+    },
   }
 </script>

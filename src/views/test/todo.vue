@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>TODOS</h2>
+    <router-link to="/todos/">もどる</router-link>
     <div v-if="todo">
       {{ id }} : {{ todo.text }} {{ todo.done }}
       <div>
