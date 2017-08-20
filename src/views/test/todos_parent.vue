@@ -28,6 +28,10 @@
 <style lang="scss">
   @import '../../main.scss';
 
+  .error {
+    color: red;
+  }
+
   .child-view {
     transition: all .1s cubic-bezier(.55, 0, .1, 1);
   }
@@ -46,45 +50,60 @@
 
   table {
     border-collapse: collapse;
+    th {
+      color: $accentColorDark;
+    }
+    th,
+    td {
+      text-align: center;
+      vertical-align: middle;
+      padding: .3em .5em;
+      border: 1px dashed #ccc;
+      height: 1px;
+    }
   }
 
-  table tr th {
-    color: $accentColorDark;
+  .todo {
+    td.title {
+      text-align: left;
+      padding: 0;
+      width: 200px;
+    }
+
+    &.editing .view,
+    .edit {
+      display: none;
+    }
+
+    &.editing .edit {
+      display: block;
+      width: 100%;
+      padding: .3em .5em;
+      height: 100%;
+    }
+
+    .view label {
+      padding: .3em .5em;
+      display: block;
+    }
+
+    .toggle {
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+      background: #f0f0f0;
+      border: 1px solid #d0d0d0;
+      border-radius: 5px;
+      padding: 2px .5em;
+      font-size: 12px;
+      &:hover {
+        background: #f8f8f8;
+      }
+    }
+    &.completed .toggle {
+      background: #ade9af;
+      border: 1px solid #8ebf8f;
+    }
   }
 
-  table tr th,
-  table tr td {
-    padding: .2em 1em;
-    vertical-align: middle;
-    border: 1px dashed #ccc;
-    text-align: center;
-  }
-
-  .todo td.title {
-    padding: 0;
-    text-align: left;
-    width: 200px;
-  }
-
-  .todo .view label {
-    padding: 4px;
-    display: block;
-  }
-
-  .todo.editing .view,
-  .todo .edit {
-    display: none;
-  }
-
-  .todo.editing .edit {
-    display: block;
-    width: 100%;
-    padding: 4px;
-  }
-
-  .todo .toggle {
-    cursor: pointer;
-    background: #f0f0f0;
-    text-align: center;
-  }
 </style>

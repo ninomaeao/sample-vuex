@@ -7,7 +7,7 @@ const _todos = {
 export default {
   getTodos (cb) {
     let todos = Object.assign({}, _todos);
-    setTimeout(() => cb(todos), 0)
+    setTimeout(() => cb(todos), 300)
   },
   updateTodo (cb, payload) {
     setTimeout(() => {

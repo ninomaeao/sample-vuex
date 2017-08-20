@@ -1,6 +1,10 @@
 <template>
   <div>
-    <table>
+    <div class="loading" v-if="loading">Loading...</div>
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
+    <table v-if="todos">
       <tr>
         <th>ID</th>
         <th>タイトル</th>
@@ -52,6 +56,8 @@
     },
     data() {
       return {
+        loading: false,
+        error: null,
         editedTodo: null,
       }
     },
@@ -66,6 +72,19 @@
       ...mapActions('todo', [
         'updateTodo'
       ]),
+      fetchData () {
+        this.error = null;
+        this.loading = true;
+        const vm = this;
+        this.$store.dispatch('todo/getTodos', {
+          cb(err) {
+            vm.loading = false;
+            if (err) {
+              vm.error = err.toString();
+            }
+          }
+        })
+      },
       editTodo: function (todo) {
         this.beforeEditCache = todo.title;
         this.editedTodo = todo
@@ -91,7 +110,7 @@
       },
     },
     created() {
-      this.$store.dispatch('todo/getTodos')
+      this.fetchData();
     },
   }
 </script>

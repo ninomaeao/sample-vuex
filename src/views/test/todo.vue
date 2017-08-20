@@ -50,7 +50,6 @@
     data() {
       return {
         loading: false,
-        post: null,
         error: null,
         editedTodo: null,
       }
@@ -125,12 +124,8 @@
   }
 </script>
 
-<style>
+<style scoped>
   table tr td {
     text-align: left;
-  }
-
-  .error {
-    color: red;
   }
 </style>

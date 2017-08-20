@@ -1,13 +1,13 @@
 import apiTodo from '../../api/todo'
 
 const state = {
-  all: [],
+  all: {},
   todo: {}
 };
 
 const getters = {
   getTodos: state => {
-    return state.all
+    return _.size(state.all) ? state.all : null
   },
   getTodo: state => (id) => {
     return state.all[id]
@@ -15,10 +15,19 @@ const getters = {
 };
 
 const actions = {
-  getTodos({commit}) {
-    apiTodo.getTodos(todos => {
-      commit('mutateTodos', {todos})
-    })
+  getTodos({commit}, payload) {
+    if (!_.size(state.all)) {
+      apiTodo.getTodos(todos => {
+        if (_.size(todos)) {
+          commit('mutateTodos', {todos});
+          payload.cb(null);
+        } else {
+          payload.cb(new Error('Todos not found.'))
+        }
+      })
+    } else {
+      payload.cb(null)
+    }
   },
   getTodo({commit}, payload) {
     let id = Number(payload.id);
@@ -38,7 +47,7 @@ const actions = {
   },
   updateTodo({commit}, payload) {
     apiTodo.updateTodo((err, todo) => {
-      if (err){
+      if (err) {
       } else {
         commit('updateTodo', {todo})
       }
