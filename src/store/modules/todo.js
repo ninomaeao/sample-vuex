@@ -1,4 +1,4 @@
-import todo from '../../api/todo'
+import apiTodo from '../../api/todo'
 
 const state = {
   all: [],
@@ -6,40 +6,56 @@ const state = {
 };
 
 const getters = {
-  allTodos: state => {
+  getTodos: state => {
     return state.all
   },
-  todoById: state => (id) => {
-    return state.todo
+  getTodo: state => (id) => {
+    return state.all[id]
   }
 };
 
 const actions = {
-  getAllTodos({commit}) {
-    todo.getTodos(todos => {
-      commit('mutateAllTodos', {todos})
+  getTodos({commit}) {
+    apiTodo.getTodos(todos => {
+      commit('mutateTodos', {todos})
     })
   },
-  getTodoById({commit}, payload) {
-    if (state.todo.id !== payload.id) {
-      commit('mutateTodo', {});
-      todo.getTodoById(todo => {
-        commit('mutateTodo', {todo})
-      }, payload)
+  getTodo({commit}, payload) {
+    let id = Number(payload.id);
+    let todo = state.all[id];
+    if (!todo) {
+      apiTodo.getTodos(todos => {
+        commit('mutateTodos', {todos});
+        if (todos[id]) {
+          payload.cb(null, todos[id])
+        } else {
+          payload.cb(new Error('Todo not found.'), todos[id])
+        }
+      });
+    } else {
+      payload.cb(null, todo)
     }
-  }
+  },
+  updateTodo({commit}, payload) {
+    apiTodo.updateTodo((err, todo) => {
+      if (err){
+      } else {
+        commit('updateTodo', {todo})
+      }
+    }, payload)
+  },
 };
 
 const mutations = {
-  mutateAllTodos(state, {todos}) {
+  mutateTodos(state, {todos}) {
     state.all = todos
   },
-  mutateTodo(state, {todo}) {
-    state.todo = todo
+  updateTodo(state, {todo}) {
+    let _todo = state.all[todo.id];
+    if (_todo) {
+      _todo = Object.assign(_todo, todo);
+    }
   },
-  mutateTodoDone(state, done) {
-    state.todo.done = done
-  }
 };
 
 export default {

@@ -26,6 +26,31 @@
           </transition-group>
         </td>
       </tr>
+      <tr>
+        <td>3</td>
+        <td>
+          <p class="small">data 属性とJavaScriptのやりとりによりリスト内の遷移をずらす:</p>
+          <input v-model="query" class="input-query">
+          <div>
+            <transition-group
+                name="staggered-fade"
+                tag="ul"
+                v-bind:css="false"
+                v-on:before-enter="beforeEnter"
+                v-on:enter="enter"
+                v-on:leave="leave"
+                class="list-data"
+            >
+              <li
+                  v-for="(item, index) in computedList"
+                  v-bind:key="item.msg"
+                  v-bind:data-index="index"
+              >{{ item.msg }}
+              </li>
+            </transition-group>
+          </div>
+        </td>
+      </tr>
     </table>
   </div>
 </template>
